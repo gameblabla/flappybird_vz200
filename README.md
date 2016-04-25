@@ -1,3 +1,5 @@
+![alt text](https://github.com/gameblabla/flappybird_vz200/raw/master/flappy.png "Screenshot")
+
 This is a clone of Flappy Bird for Vtech Laser 200.
 
 I originally worked on this project to see if i could make a decent game for this very weak computer.

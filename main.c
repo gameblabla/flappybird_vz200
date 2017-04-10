@@ -299,14 +299,18 @@ int collision(unsigned char x, unsigned char y, unsigned char x2, unsigned char 
 
 void __FASTCALL__ clearscreen()
 {
-	#asm
+#asm
+	ld	a,8
+	ld	(6800h),a
+	ld	(783bh),a		; force graph mode
+
 	ld	hl,7000h	; base of graphics area
 	ld	(hl),0
 	ld	d,h
 	ld	e,1			; de	= base_graphics+1
 	ld	bc,2730
 	ldir				; reset graphics window (2K)
-	#endasm
+#endasm
 }
 
 /*

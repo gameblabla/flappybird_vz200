@@ -11,7 +11,7 @@ and to permit persons to whom the Software is furnished to do so, subject to the
 
 */
 
-const  char pipe_up_24[] = { 12, 24,
+const unsigned char pipe_up_24[] = { 12, 24,
   0x7f /* .####### */,  0xe0 /* ###..... */,
   0xc0 /* ##...... */,  0x30 /* ..##.... */,
   0xff /* ######## */,  0xf0 /* ####.... */,
@@ -39,7 +39,7 @@ const  char pipe_up_24[] = { 12, 24,
 };
 
 
-const char pipe_up_12[] = { 12, 16,
+const unsigned char pipe_up_12[] = { 12, 16,
   0x7f /* .####### */,  0xe0 /* ###..... */,
   0xc0 /* ##...... */,  0x30 /* ..##.... */,
   0xff /* ######## */,  0xf0 /* ####.... */,
@@ -54,7 +54,7 @@ const char pipe_up_12[] = { 12, 16,
   0x3f /* ..###### */,  0xc0 /* ##...... */
 };
 
-const char pipe_down_24[] = { 12, 24,
+const unsigned char pipe_down_24[] = { 12, 24,
   0x3f /* ..###### */,  0xc0 /* ##...... */,
   0x3f /* ..###### */,  0xc0 /* ##...... */,
   0x3f /* ..###### */,  0xc0 /* ##...... */,
@@ -81,7 +81,7 @@ const char pipe_down_24[] = { 12, 24,
   0x7f /* .####### */,  0xe0 /* ###..... */
 };
 
-const char pipe_down_12[] = { 12, 12,
+const unsigned char pipe_down_12[] = { 12, 12,
   0x3f /* ..###### */,  0xc0 /* ##...... */,
   0x3f /* ..###### */,  0xc0 /* ##...... */,
   0x3f /* ..###### */,  0xc0 /* ##...... */,
@@ -96,7 +96,7 @@ const char pipe_down_12[] = { 12, 12,
   0x7f /* .####### */,  0xe0 /* ###..... */
 };
 
-const char flappy0[] = 
+const unsigned char flappy0[] = 
 { 
   16, 12,
   0x03 /* ......## */,  0xf0 /* ####.... */,
@@ -113,7 +113,7 @@ const char flappy0[] =
   0x07 /* .....### */,  0xc0 /* ##...... */,
 };
 
-const char flappy1[]= 
+const unsigned char flappy1[]= 
 {
   16, 12,
   0x03 /* ......## */,  0xf0 /* ####.... */,
@@ -130,7 +130,7 @@ const char flappy1[]=
   0x07 /* .....### */,  0xc0 /* ##...... */
 };
 
-const char flappy2[]=
+const unsigned char flappy2[]=
 {
   16, 12,
   0x03 /* ......## */,  0xf0 /* ####.... */,

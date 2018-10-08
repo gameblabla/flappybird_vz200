@@ -1,0 +1,6 @@
+*.o
+history/
+*.db
+main.cas
+main.vz
+main.wav

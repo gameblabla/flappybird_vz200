@@ -10,13 +10,18 @@ including without limitation the rights to use, copy, modify, merge, publish, di
 and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 */
-
 #include <stdio.h>
+#include <stdlib.h>
+#include <memory.h>
 #include <games.h>
 #include <vz.h>
 #include "sprites.h"
 
 #define K_EXIT  'Q'
+
+#ifndef __FASTCALL__
+#define __FASTCALL__
+#endif
 
 //#include "pict.h"
 /*void __FASTCALL__ put_pict(const unsigned char* spr);*/
@@ -26,12 +31,12 @@ void __FASTCALL__ trigger_gameover(void);
 void __FASTCALL__ gameplay(void);
 void __FASTCALL__ switch_mode(unsigned char mode);
 void __FASTCALL__ ready_screen(void);
-void __FASTCALL__ clearscreen();
+void __FASTCALL__ trigger_titlescreen();
 
-int collision(unsigned char x, unsigned char y, unsigned char x2, unsigned char y2, unsigned char w1, unsigned char h1, unsigned char w2, unsigned char h2);
-void put_sprite_screen(int ortype, int x, int y, void *sprite);
+unsigned char collision(unsigned char x, unsigned char y, unsigned char x2, unsigned char y2, unsigned char w1, unsigned char h1, unsigned char w2, unsigned char h2);
+void put_sprite_screen(int ortype, unsigned char x, unsigned char y, void *sprite);
 
-unsigned char done, key, i, refresh, key_time, game_mode, time_event;
+unsigned char done, key, i, key_time, game_mode, time_event;
 unsigned short score, highscore;
 
 struct wrap
@@ -114,7 +119,6 @@ void __FASTCALL__ switch_mode(unsigned char mode)
 			flappy.time_flap = 0;
 			key_time = 0;
 			score = 0;
-			refresh = 0;
 			scroll_warps[0].x = 64;
 			scroll_warps[1].x = 115;
 			scroll_warps[0].state = 1;
@@ -138,12 +142,7 @@ void __FASTCALL__ ready_screen(void)
 
 void __FASTCALL__ gameplay(void)
 {
-	if (refresh > 1)
-	{
-		clearscreen();
-		refresh = 0;
-	}
-	refresh++;	
+	memset(0x7000, 0, 2048);
 	flappybird_player();
 	wrap_gameplay();
 		
@@ -269,7 +268,7 @@ void __FASTCALL__ trigger_gameover(void)
 	printf("OR PRESS S TO PLAY AGAIN");
 }
 
-void __FASTCALL__ trigger_titlescreen(void)
+void __FASTCALL__ trigger_titlescreen()
 {
 	switch_mode(0);
 	printf("FLAPPY BIRD\n\n");
@@ -279,13 +278,12 @@ void __FASTCALL__ trigger_titlescreen(void)
 	printf("INGAME, PRESS F TO FLY\n");
 }
 
-void put_sprite_screen(int ortype, int x, int y, void *sprite)
+void put_sprite_screen(int ortype, unsigned char x, unsigned char y, void *sprite)
 {
-	if (x > -1 || x < 129)
-		putsprite(ortype, x, y, sprite);
+	putsprite(ortype, x, y, sprite);
 }
 
-int collision(unsigned char x, unsigned char y, unsigned char x2, unsigned char y2, unsigned char w1, unsigned char h1, unsigned char w2, unsigned char h2)
+unsigned char collision(unsigned char x, unsigned char y, unsigned char x2, unsigned char y2, unsigned char w1, unsigned char h1, unsigned char w2, unsigned char h2)
 {
 	if ((x + w1 > x2) && (x < x2 + w2) && (y + h1 > y2) && (y < y2 + h2))
 	{
@@ -295,22 +293,6 @@ int collision(unsigned char x, unsigned char y, unsigned char x2, unsigned char 
 	{
 		return 0;
 	}
-}
-
-void __FASTCALL__ clearscreen()
-{
-#asm
-	ld	a,8
-	ld	(6800h),a
-	ld	(783bh),a		; force graph mode
-
-	ld	hl,7000h	; base of graphics area
-	ld	(hl),0
-	ld	d,h
-	ld	e,1			; de	= base_graphics+1
-	ld	bc,2730
-	ldir				; reset graphics window (2K)
-#endasm
 }
 
 /*
